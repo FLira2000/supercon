@@ -8,6 +8,8 @@ from math import sqrt
 import numpy as np
 from thermo import simple_formula_parser
 
+print("Note: This computation takes a while to be performed. Please wait. ")
+
 df = pd.read_csv('ybaco_materials_all.csv')
 df.head()
 
@@ -45,6 +47,7 @@ print("rmse value: " + str(sqrt(avg/25)))
 #plt.show()
 
 #testig with YBa2Cu3O7
+print("Testing predition with YBa2Cu3O7...")
 ybaco7 = df.loc[df['Unnamed: 0'] == 29]
 ybaco7 = ybaco7.drop(['material'], axis=1)
 observedValue = np.array(ybaco7['critical_temp'])
