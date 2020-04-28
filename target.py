@@ -37,12 +37,12 @@ print("rmse value: " + str(sqrt(avg/25)))
 
 
 #plot graph
-plt.title("Predict Tc versus Observed Tc")
-plt.plot(test_y, predictions, "o", color="black")
-plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
-plt.xlabel("Observed Tc(K)")
-plt.ylabel("Predicted Tc(K)")
-plt.show()
+#plt.title("Predict Tc versus Observed Tc")
+#plt.plot(test_y, predictions, "o", color="black")
+#plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
+#plt.xlabel("Observed Tc(K)")
+#plt.ylabel("Predicted Tc(K)")
+#plt.show()
 
 #testig with YBa2Cu3O7
 ybaco7 = df.loc[df['Unnamed: 0'] == 29]
@@ -58,24 +58,23 @@ print("Predicted value for Y1Ba2Cu3O7: ", model.predict(ybaco7)[0])
 print("Observed value for Y1Ba2Cu3O7: ", observedValue[0])
 
 #chemtest
+#ybaco = df['material'][29]
+#ybacoFormula = simple_formula_parser(ybaco)
 
-ybaco = df['material'][29]
-ybacoFormula = simple_formula_parser(ybaco)
+#elementList = []
+#for chem in ybacoFormula:
+#    elementList.append(chem)
 
-elementList = []
-for chem in ybacoFormula:
-    elementList.append(chem)
+#elementList = np.array(elementList)
+#elementList = elementList[np.newaxis, :]
+#elementList = np.resize(elementList, (2, 4))
 
-elementList = np.array(elementList)
-elementList = elementList[np.newaxis, :]
-elementList = np.resize(elementList, (2, 4))
+#shadowList = []
+#for chem in ybacoFormula.values():
+#    shadowList.append(chem)
 
-shadowList = []
-for chem in ybacoFormula.values():
-    shadowList.append(chem)
+#shadowList = np.array(shadowList)
 
-shadowList = np.array(shadowList)
-
-elementList[1] = shadowList
-print(elementList)
+#elementList[1] = shadowList
+#print(elementList)
 #now elementList is our material, converted into a matrix.
