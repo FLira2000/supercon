@@ -21,7 +21,7 @@ import datetime
 agora = datetime.datetime.now()
 mailMessage = str(agora.strftime("%Y-%m-%d %H.%M")) + "\n \n"
 mailConfig = { "email": "data.supercon@gmail.com", "password": "rnzizqregtssljji" }
-PLOT_IMAGE_NAME = "plot_" + agora.strftime("%Y-%m-%d_%H:%M") + ".png"
+PLOT_IMAGE_NAME = "plot_" + agora.strftime("%Y-%m-%d_%H.%M") + ".png"
 
 #importing the dataframe
 df = pd.read_csv('ybaco_materials_all.csv')
@@ -80,7 +80,7 @@ mailMessage+= "\nPredicted value for Y1Ba2Cu3O7: " + str(model.predict(ybaco7)[0
 mailMessage+= "\nObserved value for Y1Ba2Cu3O7: " + str(observedValue[0])
 
 #sending results over email
-targetEmail = "fabioliradev@gmail.com"
+'''targetEmail = "fabioliradev@gmail.com"
 ccEmail = "josiasdsj1@gmail.com"
 
 msg = MIMEMultipart()
@@ -102,4 +102,26 @@ s = smtplib.SMTP('smtp.gmail.com', 587)
 s.starttls()
 s.login(mailConfig["email"], mailConfig["password"])
 s.send_message(msg)
-s.quit()
+s.quit()'''
+
+#chemtest
+ybaco = df['material'][29]
+ybacoFormula = simple_formula_parser(ybaco)
+
+elementList = []
+for chem in ybacoFormula:
+    elementList.append(chem)
+
+elementList = np.array(elementList)
+elementList = elementList[np.newaxis, :]
+elementList = np.resize(elementList, (2, 4))
+
+shadowList = []
+for chem in ybacoFormula.values():
+    shadowList.append(chem)
+
+shadowList = np.array(shadowList)
+
+elementList[1] = shadowList
+print(elementList)
+#now elementList is our material, converted into a matrix.
