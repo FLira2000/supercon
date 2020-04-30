@@ -20,7 +20,7 @@ import datetime
 
 agora = datetime.datetime.now()
 mailMessage = str(agora.strftime("%Y-%m-%d %H.%M")) + "\n \n"
-mailConfig = { "email": "data.supercon@gmail.com", "password": "rnzizqregtssljji" }
+mailConfig = { "email": "data.supercon@gmail.com", "password": "uyspqqdvrqtdfpkb" }
 PLOT_IMAGE_NAME = "plot_" + agora.strftime("%Y-%m-%d_%H:%M") + ".png"
 
 #importing the dataframe
