@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 print("Note: This computation may take a while to be performed. Please wait. ")
 
 import pandas as pd
