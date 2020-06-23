@@ -9,14 +9,8 @@ import matplotlib.pyplot as plt
 from math import sqrt
 import numpy as np
 from thermo import simple_formula_parser
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email.mime.application import MIMEApplication
-from email import encoders
-from os.path import basename
 import datetime
+from mail import mailSender
 
 agora = datetime.datetime.now()
 mailMessage = str(agora.strftime("%Y-%m-%d %H.%M")) + "\n \n"
@@ -79,27 +73,5 @@ print("Observed value for Y1Ba2Cu3O7: ", observedValue[0])
 mailMessage+= "\nPredicted value for Y1Ba2Cu3O7: " + str(model.predict(ybaco7)[0])
 mailMessage+= "\nObserved value for Y1Ba2Cu3O7: " + str(observedValue[0])
 
-#sending results over email
-targetEmail = "fabioliradev@gmail.com"
-ccEmail = "josiasdsj1@gmail.com"
-
-msg = MIMEMultipart()
-msg['From'] = "data.supercon@gmail.com"
-msg['To'] = targetEmail
-msg['Subject'] = "Prediction data"
-msg['Cc'] = ', '.join([ccEmail])
-
-body = mailMessage
-
-msg.attach(MIMEText(body, 'plain'))
-
-part = MIMEApplication(open(PLOT_IMAGE_NAME, "rb").read(), Name=basename(PLOT_IMAGE_NAME))
-part['Content-Disposition'] = 'attachment; filename="%s"' % basename(PLOT_IMAGE_NAME)
-
-msg.attach(part)
-
-s = smtplib.SMTP('smtp.gmail.com', 587)
-s.starttls()
-s.login(mailConfig["email"], mailConfig["password"])
-s.send_message(msg)
-s.quit()
+#sending mail
+mailSender(PLOT_IMAGE_NAME, mailMessage)
