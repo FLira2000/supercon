@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_absolute_error
 import matplotlib.pyplot as plt
 from math import sqrt
@@ -56,7 +57,7 @@ for i in range(1, 26):
     avg += sqrt(mean_absolute_error(predictions, test_y))
 
 print("XGBoost Regressor rmse value: " + str(avg/25))
-mailMessage+= "XGBoost Regressor rmse value: " + str(avg/25)
+mailMessage+= "\nXGBoost Regressor rmse value: " + str(avg/25)
 
 #plotting the image
 plt.title("Predict Tc versus Observed Tc using XGBoost Regressor")
@@ -69,10 +70,8 @@ plt.ylabel("Predicted Tc(K)")
 plt.show()
 
 #testing the model with the test element
-print("XGBoost Regressor data: ")
-print("Predicted value for Y1Ba2Cu3O7: ", model.predict(ybaco7)[0])
-mailMessage+= "\nXGBoost Regressor data:"
-mailMessage+= "\nPredicted value for Y1Ba2Cu3O7: " + str(model.predict(ybaco7)[0])
+print("XGBoost Regressor predicted value for Y1Ba2Cu3O7: ", model.predict(ybaco7)[0])
+mailMessage+= "\nXGBoost Regressor data predicted value for Y1Ba2Cu3O7: " + str(model.predict(ybaco7)[0])
 
 #random forests
 forestModel = RandomForestRegressor(n_estimators=60)
@@ -85,7 +84,7 @@ for i in range(1, 26):
     avg_forest += sqrt(mean_absolute_error(predictions_forest, test_y))
 
 print('RandomForests Regressor RMSE(for comparison): ', str(avg_forest/25))
-mailMessage += 'RandomForests Regressor RMSE(for comparison):' + str(avg_forest/25)
+mailMessage += '\nRandomForests Regressor RMSE(for comparison):' + str(avg_forest/25)
 
 plt.title("Predict Tc versus Observed Tc using RandomForests Regressor")
 plt.plot(test_y, predictions_forest, "o", color="black")
@@ -95,10 +94,31 @@ plt.ylabel("Predicted Tc(K)")
 #plt.show -> plt.savefig
 plt.show()
 
-print("RandomForests Regressor data: ")
-print("Predicted value for Y1Ba2Cu3O7: ", forestModel.predict(ybaco7)[0])
-mailMessage+= 'RandomForests Regressor data:'
-mailMessage+= 'Predicted value for Y1Ba2Cu3O7: ' + str(forestModel.predict(ybaco7)[0])
+print("RandomForests Regressor predicted value for Y1Ba2Cu3O7: ", forestModel.predict(ybaco7)[0])
+mailMessage+= '\nRandomForests Regressor predicted value for Y1Ba2Cu3O7: ' + str(forestModel.predict(ybaco7)[0])
 
+#knn
+knnModel = KNeighborsRegressor(n_jobs=-1, weights='distance')
+knnModel.fit(train_X, train_y)
+
+avg_knn = 0
+predictions_knn = 0
+for i in range(1, 26):
+    predictions_knn = knnModel.predict(test_X)
+    avg_knn += sqrt(mean_absolute_error(predictions_knn, test_y))
+
+print('KNN Regressor RMSE(for comparison): ', str(avg_knn/25))
+mailMessage+= ('\nKNN Regressor RMSE(for comparison): ' + str(avg_knn/25))
+
+plt.title("Predict Tc versus Observed Tc using KNN Regressor")
+plt.plot(test_y, predictions_knn, "o", color="black")
+plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
+plt.xlabel("Observed Tc(K)")
+plt.ylabel("Predicted Tc(K)")
+#plt.show -> plt.savefig
+plt.show()
+
+print("KNN Regressor predicted value for Y1Ba2Cu3O7: ", knnModel.predict(ybaco7)[0])
+mailMessage+= '\nKNN Regressor data: Predicted value for Y1Ba2Cu3O7: ' + str(knnModel.predict(ybaco7)[0])    
 #sending mail
 #mailSender(PLOT_IMAGE_NAME, mailMessage)
