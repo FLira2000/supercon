@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from xgboost import XGBRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 import matplotlib.pyplot as plt
 from math import sqrt
@@ -26,11 +27,12 @@ df.head()
 ybaco7 = df.loc[df['Unnamed: 0'] == 29]
 ybaco7 = ybaco7.drop(['material'], axis=1)
 observedValue = np.array(ybaco7['critical_temp'])
-mailMessage += '\nUsing Y1Ba2Cu3O7, observed value: ' + str(observedValue)
+
+print('\nUsing Y1Ba2Cu3O7 for testing predictions, observed value: ' + str(observedValue))
+mailMessage += '\nUsing Y1Ba2Cu3O7 for testing predictions, observed value: ' + str(observedValue)
+
 ybaco7 = ybaco7.drop(['critical_temp'], axis=1)
-
 ybaco7 = ybaco7.drop(['Unnamed: 0'], axis = 1).drop(['Unnamed: 0.1'], axis = 1).select_dtypes(exclude=['object'])
-
 ybaco7 = np.array(ybaco7)
 
 #linear definition
@@ -39,14 +41,11 @@ x = df.drop(['critical_temp'], axis=1).drop(['Unnamed: 0'], axis = 1).drop(['Unn
 
 #creating the testing and training amostrages
 train_X, test_X, train_y, test_y = train_test_split(x.values, y.values, test_size=0.2)
-
 df_imputer = SimpleImputer()
 train_X = df_imputer.fit_transform(train_X)
 test_X = df_imputer.transform(test_X)
 
-
 #xgboost
-
 model = XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.50,learning_rate = 0.02, max_depth = 16, alpha = 1, n_estimators = 374)
 model.fit(train_X, train_y, verbose=False) # fitting the model
 
@@ -70,11 +69,36 @@ plt.ylabel("Predicted Tc(K)")
 plt.show()
 
 #testing the model with the test element
-
 print("XGBoost Regressor data: ")
 print("Predicted value for Y1Ba2Cu3O7: ", model.predict(ybaco7)[0])
 mailMessage+= "\nXGBoost Regressor data:"
 mailMessage+= "\nPredicted value for Y1Ba2Cu3O7: " + str(model.predict(ybaco7)[0])
+
+#random forests
+forestModel = RandomForestRegressor(n_estimators=60)
+forestModel.fit(train_X, train_y)
+
+avg_forest = 0
+predictions_forest = 0
+for i in range(1, 26):
+    predictions_forest = forestModel.predict(test_X) 
+    avg_forest += sqrt(mean_absolute_error(predictions_forest, test_y))
+
+print('RandomForests Regressor RMSE(for comparison): ', str(avg_forest/25))
+mailMessage += 'RandomForests Regressor RMSE(for comparison):' + str(avg_forest/25)
+
+plt.title("Predict Tc versus Observed Tc using RandomForests Regressor")
+plt.plot(test_y, predictions_forest, "o", color="black")
+plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
+plt.xlabel("Observed Tc(K)")
+plt.ylabel("Predicted Tc(K)")
+#plt.show -> plt.savefig
+plt.show()
+
+print("RandomForests Regressor data: ")
+print("Predicted value for Y1Ba2Cu3O7: ", forestModel.predict(ybaco7)[0])
+mailMessage+= 'RandomForests Regressor data:'
+mailMessage+= 'Predicted value for Y1Ba2Cu3O7: ' + str(forestModel.predict(ybaco7)[0])
 
 #sending mail
 #mailSender(PLOT_IMAGE_NAME, mailMessage)
