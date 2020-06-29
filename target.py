@@ -18,8 +18,8 @@ from mail import mailSender
 
 agora = datetime.datetime.now()
 mailMessage = str(agora.strftime("%Y-%m-%d %H.%M")) + "\n \n"
-mailConfig = { "email": "data.supercon@gmail.com", "password": "rnzizqregtssljji" }
 PLOT_IMAGE_NAME = str("plot_" + agora.strftime("%Y-%m-%d_%H%M") + ".png")
+plotNameList = []
 
 #importing the dataframe
 df = pd.read_csv('ybaco_materials_all.csv')
@@ -67,8 +67,12 @@ plt.plot(test_y, predictions, "o", color="black")
 plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
 plt.xlabel("Observed Tc(K)")
 plt.ylabel("Predicted Tc(K)")
+
 #plt.show -> plt.savefig
-plt.savefig(str("xgb_" + PLOT_IMAGE_NAME))
+plotName = str("xgb_" + PLOT_IMAGE_NAME)
+plt.savefig(plotName)
+plotNameList.append(plotName)
+
 plt.close()
 
 #testing the model with the test element
@@ -93,7 +97,12 @@ plt.plot(test_y, predictions_forest, "o", color="black")
 plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
 plt.xlabel("Observed Tc(K)")
 plt.ylabel("Predicted Tc(K)")
-plt.savefig(str("rndFor_" + PLOT_IMAGE_NAME))
+
+#plt.show -> plt.savefig
+plotName = str("rndFor_" + PLOT_IMAGE_NAME)
+plt.savefig(plotName)
+plotNameList.append(plotName)
+
 plt.close()
 
 print("RandomForests Regressor predicted value for Y1Ba2Cu3O7: ", forestModel.predict(ybaco7)[0])
@@ -117,10 +126,16 @@ plt.plot(test_y, predictions_knn, "o", color="black")
 plt.plot(range(-10, 125), range(-10, 125), color = 'gray')
 plt.xlabel("Observed Tc(K)")
 plt.ylabel("Predicted Tc(K)")
-plt.savefig(str("knn_" + PLOT_IMAGE_NAME))
+
+#plt.show -> plt.savefig
+plotName = str("knn_" + PLOT_IMAGE_NAME)
+plt.savefig(plotName)
+plotNameList.append(plotName)
+
 plt.close()
 
 print("KNN Regressor predicted value for Y1Ba2Cu3O7: ", knnModel.predict(ybaco7)[0])
 mailMessage+= '\nKNN Regressor data: Predicted value for Y1Ba2Cu3O7: ' + str(knnModel.predict(ybaco7)[0])    
+
 #sending mail
-#mailSender(PLOT_IMAGE_NAME, mailMessage)
+mailSender(plotNameList, mailMessage)

@@ -10,7 +10,7 @@ MAIL_CONFIG = { "email": "data.supercon@gmail.com", "password": "rnzizqregtssljj
 targetEmail = "fabioliradev@gmail.com"
 ccEmail = "josiasdsj1@gmail.com"
 
-def mailSender(attachmentName, bodyMessage):
+def mailSender(attachmentNameList, bodyMessage):
 
     #sending results over email
     msg = MIMEMultipart()
@@ -23,10 +23,10 @@ def mailSender(attachmentName, bodyMessage):
 
     msg.attach(MIMEText(body, 'plain'))
 
-    part = MIMEApplication(open(attachmentName, "rb").read(), Name=basename(attachmentName))
-    part['Content-Disposition'] = 'attachment; filename="%s"' % basename(attachmentName)
-
-    msg.attach(part)
+    for attachmentName in attachmentNameList:
+        part = MIMEApplication(open(attachmentName, "rb").read(), Name=basename(attachmentName))
+        part['Content-Disposition'] = 'attachment; filename="%s"' % basename(attachmentName)
+        msg.attach(part)
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
