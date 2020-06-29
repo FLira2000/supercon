@@ -1,6 +1,4 @@
-
-.vscode/launch.json
-
-.png
-
-./__pycache__
+.vscode/
+*.png
+.__pycache__/
+.vscode/settings.json
