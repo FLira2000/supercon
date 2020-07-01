@@ -6,7 +6,7 @@ from email.mime.application import MIMEApplication
 from email import encoders
 from os.path import basename
 
-MAIL_CONFIG = { "email": "data.supercon@gmail.com", "password": "rnzizqregtssljji" }
+MAIL_CONFIG = { "email": "data.supercon@gmail.com", "password": "jxqbuvfyuztsnlcg" }
 targetEmail = "fabioliradev@gmail.com"
 ccEmail = "josiasdsj1@gmail.com"
 
