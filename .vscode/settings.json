@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "C:\\Users\\fabop\\anaconda3\\python.exe",
+    "terminal.integrated.shellArgs.windows": "conda activate 'C:\\Users\\fabop\\anaconda3'"
+}
