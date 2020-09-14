@@ -27,8 +27,10 @@ def Correlations():
         CorrelationList
         GoodCorrelationList = []
         for i in CorrelationList:
-            print(i[1])
             if i[1] > 0.85 or i[1] < -0.85:
                 GoodCorrelationList.append( i )   
-                GoodCorrelationList
-                
+        
+    if len(GoodCorrelationList) > 0:
+        return GoodCorrelationList
+    else:
+        return FeaturesList.drop('critical_temp').tolist()
