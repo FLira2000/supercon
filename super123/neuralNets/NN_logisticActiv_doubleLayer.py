@@ -7,7 +7,7 @@ from sklearn.metrics import mean_absolute_error
 from math import sqrt
 
 def neural_logistic_2layer(): 
-    df = pd.read_csv('../super123Database_final')
+    df = pd.read_csv('super123Database_final')
     df = df.drop('Unnamed: 0', axis=1).drop('Unnamed: 0.1', axis=1)
 
     y = df['critical_temp']
