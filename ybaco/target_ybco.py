@@ -14,7 +14,7 @@ from math import sqrt
 import numpy as np
 from thermo import simple_formula_parser
 import datetime
-from mail import mailSender
+import mailSender from mail
 
 agora = datetime.datetime.now()
 mailMessage = str(agora.strftime("%Y-%m-%d %H.%M")) + "\n \n"
@@ -138,4 +138,4 @@ print("KNN Regressor predicted value for Y1Ba2Cu3O7: ", knnModel.predict(ybaco7)
 mailMessage+= '\nKNN Regressor data: Predicted value for Y1Ba2Cu3O7: ' + str(knnModel.predict(ybaco7)[0])    
 
 #sending mail
-mailSender(plotNameList, mailMessage)
+#mailSender(plotNameList, mailMessage)
