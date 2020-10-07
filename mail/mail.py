@@ -33,5 +33,3 @@ def mailSender(attachmentNameList, bodyMessage):
     s.login(MAIL_CONFIG["email"], MAIL_CONFIG["password"])
     s.send_message(msg)
     s.quit()
-
-    return 
