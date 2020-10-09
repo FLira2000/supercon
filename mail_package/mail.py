@@ -24,7 +24,7 @@ def mailSender(attachmentNameList, bodyMessage):
     msg.attach(MIMEText(body, 'plain'))
 
     for attachmentName in attachmentNameList:
-        part = MIMEApplication(open(attachmentName, "rb").read(), Name=basename(attachmentName))
+        part = MIMEApplication(open(str("./ybaco/" + attachmentName), "rb").read(), Name=basename(attachmentName))
         part['Content-Disposition'] = 'attachment; filename="%s"' % basename(attachmentName)
         msg.attach(part)
 
