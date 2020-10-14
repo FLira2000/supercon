@@ -11,9 +11,8 @@ from neuralNets.NN_reluActiv_doubleLayer import neural_relu_2layer
 from neuralNets.NN_reluActiv_singleLayer import neural_relu_1layer
 from neuralNets.NN_tahnActiv_doubleLayer import neural_tahn_2layer
 from neuralNets.NN_tahnActiv_singleLayer import neural_tahn_1layer
-from nn_test_iterator import NNtest_iterator
 
-df = pd.read_csv(f"./databases/super123Database_final.csv")
+df = pd.read_csv("super123Database_final")
 df = df.drop("Unnamed: 0", axis=1).drop("Unnamed: 0.1", axis=1)
 
 y = df['critical_temp']
@@ -26,6 +25,7 @@ train_X = df_imputer.fit_transform(train_X)
 test_X = df_imputer.transform(test_X)
 
 def NNtest_iterator(nn, test_X, test_y, iter_times):
+    predictions = []
     avg = 0
     for i in range(1, iter_times):
         predictions = nn.predict(test_X)
