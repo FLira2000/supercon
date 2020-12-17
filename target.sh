@@ -1,1 +1,1 @@
-cd super123 && python core.py
+cd ./super123/ && python core.py
