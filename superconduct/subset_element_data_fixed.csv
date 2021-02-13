@@ -1,4 +1,4 @@
-,FullNameElement,Element,AtomicMass,FirstIonizationEnergy,AtomicRadius,Density,ElectronAffinity,FusionHeat,ThermalConductivity,Valence
+FullNameElement,Element,AtomicMass,FirstIonizationEnergy,AtomicRadius,Density,ElectronAffinity,FusionHeat,ThermalConductivity,Valence
 0,hydrogen,H,1.00794,1311.3,53,0.0899,74.3,0.5579999999999999,0.1805,1
 1,helium,He,4.0026019999999995,2361.3,31,0.1785,1.5,0.02,0.1513,0
 2,lithium,Li,6.941,519.9,167,535.0,61.1,3.0,85.0,1
