@@ -8,4 +8,4 @@ def makeup(element):
 
     return chem_dict
 
-print(makeup('H2O'))
+print(makeup('NaCl'))
